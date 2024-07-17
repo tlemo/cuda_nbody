@@ -5,6 +5,7 @@
 
 #include <map>
 #include <string>
+#include <stdexcept>
 
 static std::map<std::string, NBodyPlugin*> g_plugins;
 
@@ -17,9 +18,11 @@ void RegisterPlugin(NBodyPlugin* plugin, const std::string& name) {
 }
 
 NBodyPlugin* SelectPlugin(const std::string& name) {
-  printf("Implementation plugin: %s\n", name.c_str());
   auto it = g_plugins.find(name);
-  CHECK(it != g_plugins.end());
+  if (it == g_plugins.end()) {
+    throw std::runtime_error("Plugin not found: " + name);
+  }
+  printf("Implementation plugin: %s\n", name.c_str());
   return it->second;
 }
 

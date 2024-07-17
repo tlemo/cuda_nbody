@@ -159,7 +159,8 @@ int main(int argc, const char* argv[]) {
   auto& plugin_arg = args.add_argument("--plugin").required();
   std::string plugin_arg_help = "Implementation plugin, valid options: ";
   for (const auto& name : AvailablePlugins()) {
-    plugin_arg.add_choice(name);
+    // plugin_arg.add_choice(name);
+    // (argparse bug: https://github.com/p-ranav/argparse/issues/370)
     plugin_arg_help += "\n - " + name;
   }
   plugin_arg.default_value("cuda");

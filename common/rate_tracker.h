@@ -18,16 +18,14 @@ class RateTracker {
   void Reset() {
     next_update_ = 0;
     updates_count_ = 0;
-    last_report_ = Clock::now();
+    start_timestamp_ = Clock::now();
+    last_report_ = start_timestamp_;
   }
 
   void Update() {
-    auto time_stamp = Clock::now();
-    if (updates_count_ == 0) {
-      first_update_ = time_stamp;
-    }
+    auto timestamp = Clock::now();
     assert(next_update_ < kMaxTrackedUpdates);
-    update_times_[next_update_++] = time_stamp;
+    update_times_[next_update_++] = timestamp;
     if (next_update_ == kMaxTrackedUpdates) {
       next_update_ = 0;
     }
@@ -65,7 +63,8 @@ class RateTracker {
 
   double average_rate() const {
     if (updates_count_ > 0) {
-      const std::chrono::duration<double> delta = Clock::now() - first_update_;
+      const std::chrono::duration<double> delta =
+          Clock::now() - start_timestamp_;
       const double seconds = delta.count();
       return updates_count_ / seconds;
     } else {
@@ -76,7 +75,7 @@ class RateTracker {
   int updates_count() const { return updates_count_; }
 
  private:
-  Clock::time_point first_update_;
+  Clock::time_point start_timestamp_;
   Clock::time_point update_times_[kMaxTrackedUpdates];
   int next_update_ = 0;
   int updates_count_ = 0;

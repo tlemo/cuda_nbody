@@ -1,0 +1,27 @@
+{
+  "name": "cuda-nbody-example",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name": "argparse",
+      "version>=": "3.0"
+    },
+    {
+      "name": "glew",
+      "version>=": "2.2.0"
+    },
+    {
+      "name": "imgui",
+      "features": [
+        "glfw-binding",
+        "opengl3-binding"
+      ],
+      "version>=": "1.85"
+    },
+    {
+      "name": "glfw3",
+      "version>=": "3.3.5"
+    }
+  ],
+  "builtin-baseline": "d48ac9aa527620d43fb3b3327d0b9e054de203c2"
+}

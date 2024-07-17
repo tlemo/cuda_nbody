@@ -11,6 +11,20 @@ Various N-body implementations, demonstrating multiple CPU and CUDA optimization
 2. CUDA SDK 11.0 or newer
 3. CMake 3.25 or newer
 
+#### Getting the Source Code
+
+This source tree uses [Git submodules][5] for third party libraries,
+and `--recursive` is required when cloning:
+
+```shell
+git clone --recursive <repository>
+```
+
+#### Building on Windows
+
+When building on Windows with MSVC, the CMake configuration must be done from
+a MSVC command prompt (ex. run `vcvarsall.bat`)
+
 #### Building on Linux
 
 A few additional system tools and libraries may be required. The CMake 

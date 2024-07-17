@@ -6,6 +6,7 @@
 #include <nvtx3/nvToolsExt.h>
 
 #include <cstdlib>
+#include <stdio.h>
 
 //------------------------------------------------------------------------------
 

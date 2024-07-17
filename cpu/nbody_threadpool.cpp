@@ -3,6 +3,7 @@
 #include <common/utils.h>
 #include <common/math_2d.h>
 
+#include <GL/glew.h>
 #include <GL/gl.h>
 
 #include <stdio.h>

@@ -2,7 +2,7 @@
 #include "utils.h"
 
 #include <stdarg.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <stdio.h>
 
 void __fatal(const char* message, ...) {

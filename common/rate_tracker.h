@@ -9,8 +9,8 @@
 class RateTracker {
   using Clock = std::chrono::steady_clock;
 
-  static const int kMaxTrackedUpdates = 30;
-  static const int kMinAggregatedUpdates = 5;
+  static constexpr int kMaxTrackedUpdates = 30;
+  static constexpr int kMinAggregatedUpdates = 5;
 
  public:
   RateTracker() { Reset(); }
@@ -51,9 +51,11 @@ class RateTracker {
       return 0;
     }
 
-    const int last_update = (kMaxTrackedUpdates + next_update_ - 1) % kMaxTrackedUpdates;
+    const int last_update =
+        (kMaxTrackedUpdates + next_update_ - 1) % kMaxTrackedUpdates;
     const int oldest_update =
-        (kMaxTrackedUpdates + next_update_ - tracked_updates) % kMaxTrackedUpdates;
+        (kMaxTrackedUpdates + next_update_ - tracked_updates) %
+        kMaxTrackedUpdates;
 
     const std::chrono::duration<double> delta =
         update_times_[last_update] - update_times_[oldest_update];

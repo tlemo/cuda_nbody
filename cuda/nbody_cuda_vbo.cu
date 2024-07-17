@@ -113,10 +113,12 @@ class NBody : public NBodyPlugin {
     // glBindBuffer(GL_ARRAY_BUFFER, 0);
     CU(cudaGraphicsGLRegisterBuffer(
         &prev_pos_cu_, prev_pos_vbo_, cudaGraphicsMapFlagsNone));
-    CU(cudaGraphicsGLRegisterBuffer(&pos_cu_, pos_vbo_, cudaGraphicsMapFlagsNone));
+    CU(cudaGraphicsGLRegisterBuffer(
+        &pos_cu_, pos_vbo_, cudaGraphicsMapFlagsNone));
 
     glBindBuffer(GL_ARRAY_BUFFER, pos_vbo_);
-    auto pos = static_cast<Vector2*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+    auto pos =
+        static_cast<Vector2*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
     CHECK(pos != nullptr);
 
     // copy initial values
@@ -152,8 +154,10 @@ class NBody : public NBodyPlugin {
     std::swap(pos_cu_, prev_pos_cu_);
 
     // mapping hints
-    CU(cudaGraphicsResourceSetMapFlags(pos_cu_, cudaGraphicsMapFlagsWriteDiscard));
-    CU(cudaGraphicsResourceSetMapFlags(prev_pos_cu_, cudaGraphicsMapFlagsReadOnly));
+    CU(cudaGraphicsResourceSetMapFlags(pos_cu_,
+                                       cudaGraphicsMapFlagsWriteDiscard));
+    CU(cudaGraphicsResourceSetMapFlags(prev_pos_cu_,
+                                       cudaGraphicsMapFlagsReadOnly));
 
     // map the resources
     CU(cudaGraphicsMapResources(1, &pos_cu_, 0));

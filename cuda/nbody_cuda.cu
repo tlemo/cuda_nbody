@@ -12,7 +12,9 @@
 
 namespace cuda_naive {
 
-__global__ static void UpdateKernel(Body* bodies, const Body* prev_bodies, int count) {
+__global__ static void UpdateKernel(Body* bodies,
+                                    const Body* prev_bodies,
+                                    int count) {
   const int index = blockIdx.x * blockDim.x + threadIdx.x;
   if (index < count) {
     Body body = prev_bodies[index];
@@ -76,7 +78,8 @@ class NBody : public NBodyPlugin {
 
     const int kBlockSize = 128;
     const int kBlockCount = (bodies_count_ + kBlockSize - 1) / kBlockSize;
-    UpdateKernel<<<kBlockCount, kBlockSize>>>(bodies_, prev_bodies_, bodies_count_);
+    UpdateKernel<<<kBlockCount, kBlockSize>>>(
+        bodies_, prev_bodies_, bodies_count_);
     CU(cudaGetLastError());
     CU(cudaDeviceSynchronize());
   }

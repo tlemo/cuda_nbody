@@ -82,9 +82,11 @@ __global__ static void NewFrameKernel(RenderKernelArgs args) {
   if (col < args.width && row < args.height) {
     uint32_t& pixel = args.raster_buff[row * args.width + col];
 #if 1  // "fireworks"
-    pixel = PackRgb((pixel >> 1) & 0xff, (pixel >> 9) & 0xff, (pixel >> 17) & 0xff);
+    pixel =
+        PackRgb((pixel >> 1) & 0xff, (pixel >> 9) & 0xff, (pixel >> 17) & 0xff);
 #elif 0  // simple motion blur
-    pixel = PackRgb((pixel >> 1) & 0x7f, (pixel >> 9) & 0x7f, (pixel >> 17) & 0x7f);
+    pixel =
+        PackRgb((pixel >> 1) & 0x7f, (pixel >> 9) & 0x7f, (pixel >> 17) & 0x7f);
 #else
     pixel = PackRgb(0, 0, 0);
 #endif
@@ -148,7 +150,8 @@ class NBody : public NBodyPlugin {
     CHECK(bodies_count_ > 0);
 
     printf("Tile size: %d\n", kTileSize);
-    printf("Rounding up the number of bodies to tile size: %d\n", bodies_count_);
+    printf("Rounding up the number of bodies to tile size: %d\n",
+           bodies_count_);
 
     const size_t buffer_size = bodies_count_ * sizeof(Vector2);
 
@@ -176,8 +179,10 @@ class NBody : public NBodyPlugin {
     CHECK(glGetError() == GL_NO_ERROR);
 
     // register textures with CUDA
-    CU(cudaGraphicsGLRegisterImage(
-        &texture_cu_, texture_, GL_TEXTURE_2D, cudaGraphicsMapFlagsWriteDiscard));
+    CU(cudaGraphicsGLRegisterImage(&texture_cu_,
+                                   texture_,
+                                   GL_TEXTURE_2D,
+                                   cudaGraphicsMapFlagsWriteDiscard));
 
     // copy initial values
     for (int i = 0; i < bodies_count_; ++i) {
@@ -240,8 +245,8 @@ class NBody : public NBodyPlugin {
     render_args.height = height_;
 
     const auto kClearBlockDim = dim3(32, 32);
-    const auto kClearGridDim =
-        dim3(CeilDiv(width_, kClearBlockDim.x), CeilDiv(height_, kClearBlockDim.y));
+    const auto kClearGridDim = dim3(CeilDiv(width_, kClearBlockDim.x),
+                                    CeilDiv(height_, kClearBlockDim.y));
     NewFrameKernel<<<kClearGridDim, kClearBlockDim>>>(render_args);
 
     const auto kRenderBlockDim = 256;
@@ -256,11 +261,13 @@ class NBody : public NBodyPlugin {
 
  private:
   void UpdateTexture() {
-    CU(cudaGraphicsResourceSetMapFlags(texture_cu_, cudaGraphicsMapFlagsWriteDiscard));
+    CU(cudaGraphicsResourceSetMapFlags(texture_cu_,
+                                       cudaGraphicsMapFlagsWriteDiscard));
     CU(cudaGraphicsMapResources(1, &texture_cu_, 0));
 
     cudaArray* texture_array = nullptr;
-    CU(cudaGraphicsSubResourceGetMappedArray(&texture_array, texture_cu_, 0, 0));
+    CU(cudaGraphicsSubResourceGetMappedArray(
+        &texture_array, texture_cu_, 0, 0));
 
     const size_t width_bytes = sizeof(uint32_t) * width_;
     CU(cudaMemcpy2DToArray(texture_array,

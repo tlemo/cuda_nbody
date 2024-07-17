@@ -105,7 +105,7 @@ __global__ static void RenderKernel(RenderKernelArgs args) {
 
 class NBody : public NBodyPlugin {
  public:
-  NBody() : NBodyPlugin("cuda_direct_draw") {}
+  NBody() : NBodyPlugin("cuda_surface_draw") {}
 
  private:
   void Free() {

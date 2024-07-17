@@ -21,7 +21,7 @@ class ThreadPoolNBody : public NBodyPlugin {
   };
 
  public:
-  ThreadPoolNBody() : NBodyPlugin("threadpool") {}
+  ThreadPoolNBody() : NBodyPlugin("cpu_threadpool") {}
 
  private:
   void Init(const std::vector<Body>& bodies, int, int) final {

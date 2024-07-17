@@ -12,7 +12,7 @@
 
 class OpenMpNBody : public NBodyPlugin {
  public:
-  OpenMpNBody() : NBodyPlugin("openmp") {}
+  OpenMpNBody() : NBodyPlugin("cpu_openmp") {}
 
  private:
   void Init(const std::vector<Body>& bodies, int, int) final {

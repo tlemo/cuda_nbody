@@ -89,7 +89,7 @@ class ThreadPoolNBody : public NBodyPlugin {
 
   void UpdateBody(int index) {
     Body body = prev_bodies_[index];
-    Vector2 acc = { 0, 0 };
+    Vector2 acc = { 0.0f, 0.0f };
     for (const auto& other : prev_bodies_) {
       const Vector2 r = other.pos - body.pos;
       const Scalar dist_squared = length_squared(r) + kSofteningFactor;

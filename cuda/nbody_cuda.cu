@@ -18,7 +18,7 @@ __global__ static void UpdateKernel(Body* bodies,
   const int index = blockIdx.x * blockDim.x + threadIdx.x;
   if (index < count) {
     Body body = prev_bodies[index];
-    Vector2 acc;
+    Vector2 acc = { 0.0f, 0.0f };
     for (int j = 0; j < count; ++j) {
       const auto& other = prev_bodies[j];
       const Vector2 r = other.pos - body.pos;

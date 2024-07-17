@@ -32,7 +32,8 @@ __shared__ Vector2 pos_cache[kTileSize];
 __global__ static void UpdateKernel(KernelArgs args) {
   const int index = blockIdx.x * blockDim.x + threadIdx.x;
   const auto pos = args.prev_pos[index];
-  Vector2 acc = { 0, 0 };
+
+  Vector2 acc = { 0.0f, 0.0f };
 
   for (int j = 0; j < args.count; j += kTileSize) {
     // cache prev_pos[j .. j + kTileSize)

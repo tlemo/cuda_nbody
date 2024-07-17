@@ -29,7 +29,7 @@ __global__ static void UpdateKernel(KernelArgs args) {
   const int index = blockIdx.x * blockDim.x + threadIdx.x;
   if (index < args.count) {
     const auto pos = args.prev_pos[index];
-    Vector2 acc = { 0, 0 };
+    Vector2 acc = { 0.0f, 0.0f };
     for (int j = 0; j < args.count; ++j) {
       const Vector2 r = args.prev_pos[j] - pos;
       const Scalar dist_squared = length_squared(r) + kSofteningFactor;

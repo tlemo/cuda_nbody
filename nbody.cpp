@@ -29,7 +29,7 @@ constexpr int kHeight = 1024;
 constexpr int kBodiesCount = 25000;
 constexpr bool kInitialVelocities = true;
 
-auto generate_random_bodies() {
+auto GenerateRandomBodies() {
   printf("Generating random initial configuration...\n");
   std::vector<Body> bodies(kBodiesCount);
   std::random_device rd;
@@ -48,7 +48,7 @@ auto generate_random_bodies() {
   return bodies;
 }
 
-void resize_callback(GLFWwindow* window, int w, int h) {
+void ResizeCallback(GLFWwindow* window, int w, int h) {
   glViewport(0, 0, w, h);
 
   glMatrixMode(GL_PROJECTION);
@@ -59,7 +59,7 @@ void resize_callback(GLFWwindow* window, int w, int h) {
   glLoadIdentity();
 }
 
-void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
   if (action != GLFW_PRESS) {
     return;
   }
@@ -88,7 +88,7 @@ void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, in
   }
 }
 
-void imgui_init(GLFWwindow* window) {
+void ImguiInit(GLFWwindow* window) {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
 
@@ -98,24 +98,24 @@ void imgui_init(GLFWwindow* window) {
   ImGui::StyleColorsDark();
 }
 
-void imgui_shutdown() {
+void ImguiShutdown() {
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
 }
 
-void imgui_new_frame() {
+void ImguiNewFrame() {
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 }
 
-void imgui_render() {
+void ImguiRender() {
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void imgui_define_ui(double fps) {
+void ImguiDefineUi(double fps) {
   ImGui::Begin("Stats");
   ImGui::Text("FPS: %.2f\n", fps);
   ImGui::End();
@@ -146,8 +146,8 @@ int main(int argc, const char* argv[]) {
       glfwCreateWindow(kWidth, kHeight, "N-body simulation", nullptr, nullptr);
   CHECK(window != nullptr, "Failed to create main window");
 
-  glfwSetFramebufferSizeCallback(window, resize_callback);
-  glfwSetKeyCallback(window, keyboard_callback);
+  glfwSetFramebufferSizeCallback(window, ResizeCallback);
+  glfwSetKeyCallback(window, KeyboardCallback);
 
   glfwMakeContextCurrent(window);
 
@@ -158,27 +158,27 @@ int main(int argc, const char* argv[]) {
   int width = 0;
   int height = 0;
   glfwGetFramebufferSize(window, &width, &height);
-  resize_callback(window, width, height);
+  ResizeCallback(window, width, height);
 
-  imgui_init(window);
+  ImguiInit(window);
 
   RateTracker fps_tracker;
 
   auto plugin = SelectPlugin(args.get<std::string>("--plugin"));
 
-  plugin->Init(generate_random_bodies(), width, height);
+  plugin->Init(GenerateRandomBodies(), width, height);
 
   while (!glfwWindowShouldClose(window)) {
     glClearColor(0.1, 0.1, 0.2, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    imgui_new_frame();
+    ImguiNewFrame();
 
     plugin->Render();
     plugin->Update();
 
-    imgui_define_ui(fps_tracker.current_rate());
-    imgui_render();
+    ImguiDefineUi(fps_tracker.current_rate());
+    ImguiRender();
 
     glfwSwapBuffers(window);
 
@@ -196,7 +196,7 @@ int main(int argc, const char* argv[]) {
 
   plugin->Shutdown();
 
-  imgui_shutdown();
+  ImguiShutdown();
 
   glfwDestroyWindow(window);
   glfwTerminate();

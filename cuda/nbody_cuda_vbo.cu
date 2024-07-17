@@ -1,5 +1,5 @@
 
-// Structure-of-Arrays + VBO (Vertex Buffer Object)
+// rsqrt + SoA + VBO (Vertex Buffer Object)
 
 #include <common/cuda_utils.h>
 #include <common/math_2d.h>
@@ -33,7 +33,7 @@ __global__ static void UpdateKernel(KernelArgs args) {
     for (int j = 0; j < args.count; ++j) {
       const Vector2 r = args.prev_pos[j] - pos;
       const Scalar dist_squared = length_squared(r) + kSofteningFactor;
-      const Scalar inv_dist = 1 / sqrt(dist_squared);
+      const Scalar inv_dist = rsqrtf(dist_squared);
       const Scalar inv_dist_cube = inv_dist * inv_dist * inv_dist;
       const Scalar s = args.mass[j] * inv_dist_cube;
       acc = acc + r * s;

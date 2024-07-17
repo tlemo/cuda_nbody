@@ -1,5 +1,5 @@
 
-// Baseline CUDA version (naive)
+// baseline + rsqrt
 
 #include <common/cuda_utils.h>
 #include <common/math_2d.h>
@@ -12,7 +12,7 @@
 #include <vector>
 #include <math.h>
 
-namespace cuda_naive {
+namespace cuda_rsqrt {
 
 __global__ static void UpdateKernel(Body* bodies,
                                     const Body* prev_bodies,
@@ -25,7 +25,7 @@ __global__ static void UpdateKernel(Body* bodies,
       const auto& other = prev_bodies[j];
       const Vector2 r = other.pos - body.pos;
       const Scalar dist_squared = length_squared(r) + kSofteningFactor;
-      const Scalar inv_dist = 1.0f / sqrt(dist_squared);
+      const Scalar inv_dist = rsqrtf(dist_squared);
       const Scalar inv_dist_cube = inv_dist * inv_dist * inv_dist;
       const Scalar s = other.mass * inv_dist_cube;
       acc = acc + r * s;
@@ -39,7 +39,7 @@ __global__ static void UpdateKernel(Body* bodies,
 
 class NBody : public NBodyPlugin {
  public:
-  NBody() : NBodyPlugin("cuda") {}
+  NBody() : NBodyPlugin("cuda_rsqrt") {}
 
  private:
   void Free() {
@@ -93,4 +93,4 @@ class NBody : public NBodyPlugin {
 
 static NBody instance;
 
-}  // namespace cuda_naive
+}  // namespace cuda_rsqrt

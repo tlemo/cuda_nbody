@@ -25,6 +25,7 @@ add_executable(nbody
     cpu/nbody_openmp.cpp
     cpu/nbody_threadpool.cpp
     cuda/nbody_cuda.cu
+    cuda/nbody_cuda_rsqrt.cu
     cuda/nbody_cuda_soa.cu
     cuda/nbody_cuda_vbo.cu
     cuda/nbody_cuda_tiled.cu

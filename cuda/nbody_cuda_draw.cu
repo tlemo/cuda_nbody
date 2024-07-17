@@ -30,11 +30,7 @@ struct UpdateKernelArgs {
 __shared__ Vector2 pos_cache[kTileSize];
 
 __global__ static void UpdateKernel(UpdateKernelArgs args) {
-  assert(blockDim.x == kTileSize);
-
   const int index = blockIdx.x * blockDim.x + threadIdx.x;
-  assert(index < args.count);
-
   const auto pos = args.prev_pos[index];
 
   Vector2 acc = { 0.0f, 0.0f };
@@ -82,15 +78,8 @@ __global__ static void NewFrameKernel(RenderKernelArgs args) {
   const int row = blockIdx.y * blockDim.y + threadIdx.y;
   if (col < args.width && row < args.height) {
     uint32_t& pixel = args.raster_buff[row * args.width + col];
-#if 1  // "fireworks"
     pixel =
         PackRgb((pixel >> 1) & 0xff, (pixel >> 9) & 0xff, (pixel >> 17) & 0xff);
-#elif 0  // simple motion blur
-    pixel =
-        PackRgb((pixel >> 1) & 0x7f, (pixel >> 9) & 0x7f, (pixel >> 17) & 0x7f);
-#else
-    pixel = PackRgb(0, 0, 0);
-#endif
   }
 }
 

@@ -71,7 +71,8 @@ export __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia
 
 ## Math
 
-This 2D N-body simulation is based on the following equations:
+This 2D N-body simulation is based on a simple Verlet integration using 
+the following equations:
 
 $F = G \frac {m_1 m_2} {r^2}$
 

@@ -1,5 +1,5 @@
 
-// Structure-of-Arrays + VBO + Tiled
+// rsqrt + SoA + VBO + shared memory
 
 #include <common/cuda_utils.h>
 #include <common/math_2d.h>

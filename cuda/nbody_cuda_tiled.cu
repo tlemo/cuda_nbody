@@ -200,7 +200,7 @@ class NBody : public NBodyPlugin {
         reinterpret_cast<void**>(&args.prev_pos), &unused, prev_pos_cu_));
 
     const int kBlockSize = kTileSize;
-    const int kBlockCount = (bodies_count_ + kBlockSize - 1) / kBlockSize;
+    const int kBlockCount = CeilDiv(bodies_count_, kBlockSize);
     UpdateKernel<<<kBlockCount, kBlockSize>>>(args);
     CU(cudaGetLastError());
 

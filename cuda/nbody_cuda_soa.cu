@@ -105,7 +105,7 @@ class NBody : public NBodyPlugin {
     args.count = bodies_count_;
 
     const int kBlockSize = 128;
-    const int kBlockCount = (bodies_count_ + kBlockSize - 1) / kBlockSize;
+    const int kBlockCount = CeilDiv(bodies_count_, kBlockSize);
     UpdateKernel<<<kBlockCount, kBlockSize>>>(args);
 
     CU(cudaGetLastError());

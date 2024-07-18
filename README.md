@@ -80,6 +80,13 @@ $a = \frac{F}{m} = G \frac{m_2}{r^2}$
 
 $\vec{a} = \frac{\vec{r}}{|r|}a = G \frac{\vec{r} m_2}{r^3}$
 
+$\vec{v_{t+1}} = \vec{v_t} + \vec{a} \Delta t$
+
+$\vec{pos_{t+1}} = \vec{pos_t} + \vec{v_{t+1}} \Delta t$
+
+It's worth noticing that we only need the previous positions and velocities to
+compute the new state of the system.
+
 ## References
 
 - [N-body problem](https://en.wikipedia.org/wiki/N-body_problem)

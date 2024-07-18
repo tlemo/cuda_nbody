@@ -10,7 +10,7 @@ constexpr Scalar kMaxCoord = 1e3;
 constexpr Scalar kMinBodyMass = 0.1;
 constexpr Scalar kMaxBodyMass = 10.0;
 constexpr Scalar kTimeStep = 0.1;
-constexpr Scalar kDampingFactor = 0.9995;
+constexpr Scalar kDampingFactor = 0.995;
 constexpr Scalar kSofteningFactor = 0.1;
 
 struct Body {

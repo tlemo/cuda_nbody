@@ -54,6 +54,28 @@ make -j8 # replace 8 with the number of cores
 
 ## Running the N-body simulation
 
+```
+Usage: nbody [--help] [--version] [--width VAR] [--height VAR] [--bodies-count VAR] [--static-velocities] --plugin VAR
+
+Optional arguments:
+  -h, --help               shows help message and exits 
+  -v, --version            prints version information and exits 
+  -w, --width              Simulation window width [nargs=0..1] [default: 1024]
+  -h, --height             Simulation window height [nargs=0..1] [default: 1024]
+  -n, --bodies-count       Bodies count [nargs=0..1] [default: 5000]
+  -s, --static-velocities  Initialize the bodies with zero initial velocities 
+  --plugin                 Implementation plugin, valid options: 
+                            - cpu_openmp
+                            - cpu_threadpool
+                            - cuda
+                            - cuda_rsqrt
+                            - cuda_soa
+                            - cuda_surface_draw
+                            - cuda_tiled
+                            - cuda_vbo
+                            - dummy [nargs=0..1] [default: "cuda"]
+```
+
 #### Running on Linux + Wayland 
 
 If the app exits with the following initialization error:

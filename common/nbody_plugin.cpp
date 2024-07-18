@@ -7,19 +7,22 @@
 #include <string>
 #include <stdexcept>
 
-static std::map<std::string, NBodyPlugin*> g_plugins;
+static auto& PluginsMap() {
+  static std::map<std::string, NBodyPlugin*> plugins;
+  return plugins;
+}
 
 NBodyPlugin::NBodyPlugin(const std::string& name) {
   RegisterPlugin(this, name);
 }
 
 void RegisterPlugin(NBodyPlugin* plugin, const std::string& name) {
-  CHECK(g_plugins.insert({ name, plugin }).second);
+  CHECK(PluginsMap().insert({ name, plugin }).second);
 }
 
 NBodyPlugin* SelectPlugin(const std::string& name) {
-  auto it = g_plugins.find(name);
-  if (it == g_plugins.end()) {
+  auto it = PluginsMap().find(name);
+  if (it == PluginsMap().end()) {
     throw std::runtime_error("Plugin not found: " + name);
   }
   printf("Implementation plugin: %s\n", name.c_str());
@@ -28,7 +31,7 @@ NBodyPlugin* SelectPlugin(const std::string& name) {
 
 std::vector<std::string> AvailablePlugins() {
   std::vector<std::string> plugin_names;
-  for (const auto& kv : g_plugins) {
+  for (const auto& kv : PluginsMap()) {
     plugin_names.push_back(kv.first);
   }
   return plugin_names;

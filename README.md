@@ -111,5 +111,6 @@ compute the new state of the system.
 
 ## References
 
+- [Slides](https://docs.google.com/presentation/d/1hmPJ-AWM6xTOSWEAvGQpzx3Z0A2Hm7wtUoCTtjZk5_Y/edit?usp=sharing)
 - [N-body problem](https://en.wikipedia.org/wiki/N-body_problem)
 - [Fast N-Body Simulation with CUDA](https://developer.nvidia.com/gpugems/gpugems3/part-v-physics-simulation/chapter-31-fast-n-body-simulation-cuda)
